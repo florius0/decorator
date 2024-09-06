@@ -74,7 +74,12 @@ defmodule Decorator.Decorate do
   end
 
   defmacro before_compile(env) do
-    decorated = Module.get_attribute(env.module, :decorated) |> Enum.reverse()
+    decorated =
+      env.module
+      |> Module.get_attribute(:decorated)
+      |> Enum.uniq()
+      |> Enum.reverse()
+
     Module.delete_attribute(env.module, :decorated)
 
     decorated_functions = decorated_functions(decorated)
@@ -188,7 +193,7 @@ defmodule Decorator.Decorate do
 
     fun_and_arity = {fun, arity}
 
-    if not Enum.member?(prev_funs, fun_and_arity) do
+    if List.first(prev_funs) != fun_and_arity do
       {[fun_and_arity | prev_funs], [def_clause, override_clause] ++ attrs ++ all}
     else
       {prev_funs, [def_clause] ++ attrs ++ all}

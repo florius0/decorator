@@ -49,9 +49,10 @@ defmodule DecoratorDecorateAllTest.Fixture.MyModuleWithSeparatedClauses do
 
   def fun1(0), do: :zero
 
-  def fun2(x), do: x + 2
-
+  # NOTE: same-arity functions MUST BE grouped together
   def fun1(x), do: x
+
+  def fun2(x), do: x + 2
 end
 
 defmodule DecoratorDecorateAllTest do

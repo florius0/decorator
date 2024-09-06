@@ -46,6 +46,7 @@ defmodule Decorator.Define do
             Module.register_attribute(__MODULE__, :decorated_functions, accumulate: true)
 
             @on_definition {Decorator.Decorate, :on_definition}
+
             @before_compile {Decorator.Decorate, :before_compile}
             @before_compile {Decorator.Decorate, :add_decorated_functions}
           end
